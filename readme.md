@@ -2,6 +2,7 @@
 - application 后端主应用
 - domains 后端业务领域代码
 - webreact 前端页面
+
 #前端命令
 - yarn test 运行所有测试
 - yarn test:coverage 带覆盖率测试
