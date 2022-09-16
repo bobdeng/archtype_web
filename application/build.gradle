@@ -1,0 +1,44 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'java'
+    id 'jacoco-report-aggregation'
+    id 'xperp'
+}
+
+group = 'com.xperp.clothing'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '16'
+
+apply from: "$path/../../gradle/config/scripts/junit.gradle"
+apply from: "$path/../../gradle/config/scripts/style.gradle"
+
+dependencies {
+    implementation project(":domains")
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.github.bobdeng:spring-rbac:0.16'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    systemProperty 'webdriver', System.getProperty('webdriver')
+    useJUnitPlatform()
+}
+tasks.named('check') {
+    dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+}
+bootJar {
+    archiveFileName = "mainserver.jar"
+}
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 1.0
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+check.dependsOn checkstyleMain

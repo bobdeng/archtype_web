@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'xperp'
+    id 'jacoco'
+}
+apply from: "$path/../../gradle/config/scripts/junit.gradle"
+group 'com.xperp.clothing'
+version '1.0-SNAPSHOT'
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

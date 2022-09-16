@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="false">
+    <!--为了防止进程退出时，内存中的数据丢失，请加上此选项-->
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the businessType ch.qos.logback.classic.encoder.PatternLayoutEncoder
+            by default -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RollFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- encoders are assigned the businessType ch.qos.logback.classic.encoder.PatternLayoutEncoder
+            by default -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/mainserver.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 可用来获取StatusManager中的状态
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+    -->
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="RollFile"/>
+    </root>
+
+</configuration>

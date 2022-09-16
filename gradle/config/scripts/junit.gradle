@@ -1,0 +1,32 @@
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.junit.vintage:junit-vintage-engine:$junitVersion")
+
+    testImplementation("org.junit.platform:junit-platform-suite-api:1.8.2")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
+    testImplementation("org.junit.platform:junit-platform-engine:1.8.2")
+    testImplementation("org.junit.platform:junit-platform-commons:1.8.2")
+    testImplementation("org.junit.platform:junit-platform-suite-engine:1.8.2")
+
+    testImplementation("org.assertj:assertj-core:$assertjVersion")
+    testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
+    testImplementation 'com.github.bobdeng:dummydao:1.2'
+    testImplementation 'com.github.bobdeng:testtools:1.6'
+
+    testImplementation 'io.cucumber:cucumber-java:7.2.3'
+    testImplementation 'io.cucumber:cucumber-junit:7.2.3'
+    testImplementation 'io.cucumber:cucumber-spring:7.2.3'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.2.3'
+    implementation 'org.testcontainers:mysql:1.17.3'
+    implementation 'org.testcontainers:testcontainers:1.17.3'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:2.45.0'
+    testImplementation "org.testcontainers:selenium:1.17.3"
+}
+
+test {
+    minHeapSize = "1024M" // initial heap size
+    maxHeapSize = "4096M" // maximum heap size
+    useJUnitPlatform()
+}

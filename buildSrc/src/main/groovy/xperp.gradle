@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'com.xperp.clothing'
+version = '0.1.0'
+
+sourceCompatibility = '16'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation('com.github.bobdeng:rbac-domains:1.0.5')
+    implementation 'org.projectlombok:lombok:1.18.20'
+    compileOnly('com.github.bobdeng:rbac-domains:1.0.5')
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'com.github.bobdeng:testtools:1.6'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+    testImplementation 'org.mockito:mockito-core:4.8.0'
+
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+}
+

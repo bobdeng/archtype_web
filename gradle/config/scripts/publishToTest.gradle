@@ -1,0 +1,23 @@
+apply plugin: 'org.hidetake.ssh'
+remotes {
+    webServer {
+        host = '47.108.89.62'
+        user = 'spc'
+        password = "cwijk8"
+    }
+}
+ssh.settings {
+    knownHosts = allowAnyHosts
+}
+task deployTest {
+    dependsOn(bootJar)
+    doLast {
+        ssh.run {
+            session(remotes.webServer) {
+                put from: "$rootDir/build/libs/mainserver.jar", into: '/home/spc/'
+                put from: "$rootDir/webapp/dist", into: '/home/spc/app_lims'
+                execute './lims/mainserver.sh restart'
+            }
+        }
+    }
+}

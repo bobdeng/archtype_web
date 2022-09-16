@@ -1,0 +1,43 @@
+class CoverageExtension {
+    @SuppressWarnings("unused")
+            excludes = []
+}
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+project.ext.set('coverage', new CoverageExtension())
+
+task jacocoRootCoverageVerification(type: JacocoCoverageVerification, group: 'verification') {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.83
+            }
+        }
+    }
+}
+
+static SourceSet[] getMainSourceSets(Set<Project> projects) {
+    return projects.collect({ it.sourceSets.main }).toArray(new SourceSet[0])
+}
+
+boolean isJacocoProject(Project aProject) {
+    if (aProject.subprojects.size() > 0 && aProject.name != rootProject.name) return false
+    return aProject.pluginManager.hasPlugin('jacoco')
+}
+
+void setJacocoTaskOptions(JacocoReportBase jacocoTask) {
+    jacocoTask.sourceSets getMainSourceSets(allprojects.findAll { isJacocoProject(it) })
+    jacocoTask.executionData.from(files("${buildDir}/jacoco/aggregate.exec"))
+    afterEvaluate {
+        jacocoTask.classDirectories.setFrom(files(jacocoTask.classDirectories.files.collect {
+            fileTree(dir: it, excludes: coverage.excludes)
+        }))
+    }
+}
+
+setJacocoTaskOptions(jacocoRootCoverageVerification)
+jacocoRootCoverageVerification.dependsOn(aggregateJacocoReport)
+check.dependsOn(jacocoRootCoverageVerification)
+
