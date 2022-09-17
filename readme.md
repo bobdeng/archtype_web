@@ -1,7 +1,8 @@
 # 系统需求
 - JDK 16以上版本
 - Docker
-#目录结构
+
+# 目录结构
 - application 后端主应用
 - domains 后端业务领域代码
 - webreact 前端页面
